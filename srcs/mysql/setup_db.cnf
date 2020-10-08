@@ -1,0 +1,6 @@
+CREATE DATABASE wordpress;
+CREATE USER 'ttamesha'@'%' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'root'@'localhost';
+GRANT ALL ON *.* TO 'ttamesha'@'localhost' WITH GRANT OPTION;"
+FLUSH PRIVILEGES;
+UPDATE mysql.user SET plugin = 'mysql_native_password' WHERE user='root';
