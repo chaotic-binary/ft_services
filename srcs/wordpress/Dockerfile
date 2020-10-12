@@ -15,9 +15,10 @@ RUN wget https://wordpress.org/latest.tar.gz \
 && tar xzf latest.tar.gz \
 && mv wordpress /www/ \
 && rm ./latest.tar.gz
+
 COPY ./wp-config.php /www/wordpress
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+COPY start.sh ./start.sh
+RUN chmod +x ./start.sh
 #RUN sed -i "s/MINIKUBE_IP/$MINIKUBE_IP/g" /www/wp-config.php
 
 EXPOSE 5050

@@ -10,18 +10,18 @@ RUN apk update \
 && apk add --no-cache --upgrade bash \
 && apk add openrc --no-cache
 
+RUN 	mkdir -p /run/mysqld
+
 # Copy initialisation scripts
 COPY ./start.sh .
-COPY ./mysql_cnf.sql /etc/
-#COPY ./setup_db.sh .
+COPY ./setup_db.cnf .
 #COPY ./wordpress.sql .
-COPY ./my.cnf /etc/
+COPY ./my.cnf /etc/mysql/
 
 #RUN sed -i "s/MINIKUBE_IP/$MINIKUBE_IP/g" ./wordpress.sql
 
 # Add permissions
-RUN chmod +x start.sh
-#&& chmod +x setup_db.sh
+RUN chmod +x ./start.sh
 
 EXPOSE 3306
 ENTRYPOINT [ "./start.sh" ]

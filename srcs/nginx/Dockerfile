@@ -8,20 +8,20 @@ RUN apk update \
 && apk add supervisor \
 && apk add nginx
 
-RUN mkdir -p /www/
+#RUN mkdir -p /www/
 
 #nginx
+RUN rm -f /etc/nginx/conf.d/*.conf
 COPY ./nginx.conf /etc/nginx/conf.d/deafult.conf
-RUN ln -s /etc/nginx/sites-available/localhost /etc/nginx/sites-enabled/localhost
 
 #SSL
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/localhost.key -out /etc/ssl/certs/localhost.crt -subj "/C=RU/ST=Moscow/L=Moscow/O=School21/CN=ttamesha"
-RUN adduser -D 'user' ; echo 'user:1234' | chpasswd;
+RUN adduser -D 'admin' ; echo 'admin:password' | chpasswd;
 
-COPY ./srcs/start.sh ./
-
-RUN chown -R www-data:www-data /var/www/*
-RUN chmod -R 777 /var/*
+COPY ./start.sh ./
+COPY ./supervisor.conf /etc/supervisord.conf
+RUN chmod +rw /etc/supervisord.conf
+RUN chmod u+x ./start.sh
 
 EXPOSE 80 443 22
 

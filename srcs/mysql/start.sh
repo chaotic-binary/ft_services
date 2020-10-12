@@ -1,9 +1,9 @@
-#!bin/sh
+#!/bin/sh
 
+/usr/bin/mysql_install_db --user=root --datadir="/var/lib/mysql" > /dev/null ;
+/usr/bin/mysqld --user=root --bootstrap --verbose=0 < setup_db.cnf ;
 rc default ;
-/etc/init.d/mariadb setup
-rc-service mariadb start
-mysql -u root mysql < /etc/mysql_cnf.sql ; #check
-#mysql -u root wordpress  < /etc/wordpress.sql ;
+rc-service mariadb start ;
+#mysql -u root wordpress < /tmp/wordpress.sql ;
 rc-service mariadb stop ;
-/usr/bin/mysqld_safe ;
+/usr/bin/mysqld_safe --datadir="/var/lib/mysql" ;

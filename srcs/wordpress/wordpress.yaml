@@ -29,6 +29,7 @@ spec:
     metadata:
       labels:
         app: wordpressapp
+      name: wordpress-pod
     spec:
       containers:
       - name: wordpress
