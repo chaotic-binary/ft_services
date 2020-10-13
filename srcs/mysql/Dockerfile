@@ -6,7 +6,7 @@
 #    By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/01 13:55:37 by kwillum           #+#    #+#              #
-#    Updated: 2020/10/13 13:05:53 by ttamesha         ###   ########.fr        #
+#    Updated: 2020/10/13 18:59:05 by ttamesha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ RUN 	mkdir -p /run/mysqld
 # RUN		chown mysql:mysql /var/run/mysqld
 COPY	start.sh /tmp/
 RUN		chmod +x /tmp/start.sh
-COPY	init_database.txt /tmp/
+COPY	setup_db.txt /tmp/
 COPY 	./wordpress.sql /tmp/wordpress.sql
 COPY 	./my.cnf /etc/mysql/
 
