@@ -29,7 +29,7 @@ define('DB_USER', 'ttamesha');
 define('DB_PASSWORD', 'admin');
 
 /** MySQL hostname */
-define('DB_HOST', 'mysql');
+define( 'DB_HOST', 'mysql-service' );
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
@@ -40,8 +40,8 @@ define('DB_COLLATE', '');
 /** Filesystem operation method. */
 #define( 'FS_METHOD', 'direct');
 
-define('WP_HOME', 'http://192.168.99.101:5050' );
-define('WP_SITEURL', 'http://192.168.99.101:5050' );
+define('WP_HOME', 'http://192.168.99.195:5050' );
+define('WP_SITEURL', 'http://192.168.99.195:5050' );
 
 /**#@+
  * Authentication Unique Keys and Salts.

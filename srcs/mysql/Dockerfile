@@ -1,27 +1,30 @@
-FROM alpine:latest
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Dockerfile                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/09/01 13:55:37 by kwillum           #+#    #+#              #
+#    Updated: 2020/10/13 13:05:53 by ttamesha         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-#ARG MINIKUBE_IP
+FROM	alpine:latest
 
-VOLUME [ "/var/lib/mysql" ]
-
-# packages
-RUN apk update \
-&& apk add mariadb mariadb-client \
-&& apk add --no-cache --upgrade bash \
-&& apk add openrc --no-cache
-
+RUN		apk update
+RUN		apk add mysql mysql-client
+RUN 	apk add --no-cache --upgrade bash && rm -rf /var/cache/apk/*
+RUN 	apk add openrc
 RUN 	mkdir -p /run/mysqld
+# RUN		chown mysql:mysql /var/run/mysqld
+COPY	start.sh /tmp/
+RUN		chmod +x /tmp/start.sh
+COPY	init_database.txt /tmp/
+COPY 	./wordpress.sql /tmp/wordpress.sql
+COPY 	./my.cnf /etc/mysql/
 
-# Copy initialisation scripts
-COPY ./start.sh .
-COPY ./setup_db.cnf .
-#COPY ./wordpress.sql .
-COPY ./my.cnf /etc/mysql/
+EXPOSE	3306
+VOLUME ["/var/lib/mysql"]
 
-#RUN sed -i "s/MINIKUBE_IP/$MINIKUBE_IP/g" ./wordpress.sql
-
-# Add permissions
-RUN chmod +x ./start.sh
-
-EXPOSE 3306
-ENTRYPOINT [ "./start.sh" ]
+ENTRYPOINT ["/tmp/start.sh"]

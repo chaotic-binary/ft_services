@@ -1,0 +1,4 @@
+CREATE DATABASE wordpress;
+CREATE USER 'ttamesha'@'%' IDENTIFIED BY 'admin';
+GRANT ALL ON *.* TO 'ttamesha'@'%' WITH GRANT OPTION;"
+FLUSH PRIVILEGES;
