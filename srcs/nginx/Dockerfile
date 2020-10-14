@@ -16,6 +16,8 @@ COPY ./nginx.conf /etc/nginx/conf.d/deafult.conf
 
 #SSL
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/localhost.key -out /etc/ssl/certs/localhost.crt -subj "/C=RU/ST=Moscow/L=Moscow/O=School21/CN=ttamesha"
+
+#SSH
 RUN adduser -D 'admin' ; echo 'admin:password' | chpasswd;
 
 COPY ./start.sh ./
