@@ -40,8 +40,8 @@ define('DB_COLLATE', '');
 /** Filesystem operation method. */
 #define( 'FS_METHOD', 'direct');
 
-define('WP_HOME', 'http://192.168.99.195:5050' );
-define('WP_SITEURL', 'http://192.168.99.195:5050' );
+define('WP_HOME', 'http://192.168.99.242:5050' );
+define('WP_SITEURL', 'http://192.168.99.242:5050' );
 
 /**#@+
  * Authentication Unique Keys and Salts.
