@@ -8,23 +8,29 @@ RUN apk update \
 && apk add supervisor \
 && apk add nginx
 
-#RUN mkdir -p /www/
+VOLUME		[ "/sys/fs/cgroup" ]
 
-#nginx
-RUN rm -f /etc/nginx/conf.d/*.conf
-COPY ./nginx.conf /etc/nginx/conf.d/deafult.conf
+RUN mkdir -p /run/nginx /var/www
+
+RUN rm -f /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/deafult.conf
+COPY ./start.sh /tmp/start.sh
+COPY ./supervisor.conf /etc/supervisord.conf
+COPY ./index.html		/var/www/
 
 #SSL
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/localhost.key -out /etc/ssl/certs/localhost.crt -subj "/C=RU/ST=Moscow/L=Moscow/O=School21/CN=ttamesha"
-
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/certs/nginx.key -out /etc/ssl/certs/nginx.crt -subj "/C=RU/ST=Moscow/L=Moscow/O=School21/CN=ttamesha"
+RUN			echo "daemon off;" >> /etc/nginx/nginx.conf
 #SSH
+#RUN ssh-keygen -A \
 RUN adduser -D 'admin' ; echo 'admin:password' | chpasswd;
 
-COPY ./start.sh ./
-COPY ./supervisor.conf /etc/supervisord.conf
 RUN chmod +rw /etc/supervisord.conf
-RUN chmod u+x ./start.sh
+RUN chmod u+x /tmp/start.sh
 
 EXPOSE 80 443 22
 
-CMD ["sh", "./start.sh"]
+#CMD ["sh", "./start.sh"]
+
+EXPOSE 80 443 22
+ENTRYPOINT [ "sh", "/tmp/start.sh" ]

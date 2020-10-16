@@ -1,7 +1,7 @@
 #!/bin/sh
 
 /usr/bin/mysql_install_db --user=root --datadir="/var/lib/mysql" > /dev/null ;
-/usr/bin/mysqld --user=root --bootstrap --verbose=0 < /tmp/setup_db.txt ;
+/usr/bin/mysqld --user=root --bootstrap --verbose=0 < /tmp/setup_db ;
 rc default ;
 rc-service mariadb start ;
 mysql -u root wordpress < /tmp/wordpress.sql ;

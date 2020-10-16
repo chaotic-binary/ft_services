@@ -16,7 +16,6 @@ minikube addons enable metrics-server;
 minikube addons enable metallb;
 minikube addons enable dashboard;
 
-
 #Launch minikube
 eval $(minikube -p minikube docker-env) ;
 
@@ -27,17 +26,13 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 kubectl apply -f ./srcs/metallb.yaml ;
 
 #Build images and apply deployments,#--build-arg MINIKUBE_IP=${MINIKUBE_IP}
-docker build -t wordpress-img ./srcs/wordpress/ ;
-kubectl apply -f ./srcs/wordpress/wordpress.yaml ;
-docker build -t mysql-img ./srcs/mysql/ ;
-kubectl apply -f ./srcs/mysql/mysql.yaml ;
-docker build -t phpmyadmin-img ./srcs/phpmyadmin/ ;
-kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml ;
-#docker build -t nginx-img ./srcs/nginx/ ;
-#kubectl apply -f ./srcs/nginx/nginx.yaml ;
+#docker build -t wordpress-img ./srcs/wordpress/ ;
+#kubectl apply -f ./srcs/wordpress/wordpress.yaml ;
+#docker build -t mysql-img ./srcs/mysql/ ;
+#kubectl apply -f ./srcs/mysql/mysql.yaml ;
+#docker build -t phpmyadmin-img ./srcs/phpmyadmin/ ;
+#kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml ;
+docker build -t nginx-img ./srcs/nginx/ ;
+kubectl apply -f ./srcs/nginx/nginx.yaml ;
 
 minikube dashboard
-
-#autoload -Uz compinit
-#compinit
-#source <(kubectl completion zsh)

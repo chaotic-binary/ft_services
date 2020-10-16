@@ -6,7 +6,7 @@
 #    By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/01 13:55:37 by kwillum           #+#    #+#              #
-#    Updated: 2020/10/15 19:10:58 by ttamesha         ###   ########.fr        #
+#    Updated: 2020/10/16 23:06:24 by ttamesha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RUN 	apk add openrc
 RUN 	mkdir -p /run/mysqld
 COPY	start.sh /tmp/
 RUN		chmod +x /tmp/start.sh
-COPY	setup_db.txt /tmp/
+COPY	setup_db /tmp/
 COPY 	./wordpress.sql /tmp/wordpress.sql
 COPY 	./my.cnf /etc/mysql/
 
