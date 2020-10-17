@@ -1,36 +1,46 @@
-FROM alpine:latest
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Dockerfile                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jeldora <jeldora@student.21-school.ru>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/10/12 15:42:32 by monie             #+#    #+#              #
+#    Updated: 2020/10/12 16:28:10 by jeldora          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-# packages
-RUN apk update \
-&& apk add openrc --no-cache \
-&& apk add openssh \
-&& apk add openssl \
-&& apk add supervisor \
-&& apk add nginx
+FROM	alpine:3.12.0
 
-VOLUME		[ "/sys/fs/cgroup" ]
+RUN 	apk update && \
+		apk upgrade && \
+		apk add openrc 
 
-RUN mkdir -p /run/nginx /var/www
+WORKDIR /srcs
 
-RUN rm -f /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/deafult.conf
-COPY ./start.sh /tmp/start.sh
-COPY ./supervisor.conf /etc/supervisord.conf
-COPY ./index.html		/var/www/
+RUN		apk add nginx && \
+		apk add openssl && \
+		apk add openssh && \
+		apk add supervisor
 
-#SSL
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/certs/nginx.key -out /etc/ssl/certs/nginx.crt -subj "/C=RU/ST=Moscow/L=Moscow/O=School21/CN=ttamesha"
-RUN			echo "daemon off;" >> /etc/nginx/nginx.conf
-#SSH
-#RUN ssh-keygen -A \
-RUN adduser -D 'admin' ; echo 'admin:password' | chpasswd;
+RUN		adduser -D 'user'; echo "user:12345" | chpasswd; \
+		adduser -D -g 'www' www; mkdir /www; \
+		chown -R www:www /var/lib/nginx; \
+		chown -R www:www /www;
 
-RUN chmod +rw /etc/supervisord.conf
-RUN chmod u+x /tmp/start.sh
+RUN 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+		-subj '/C=RU/ST=Moscow/L=Moscow/O=42/OU=21/CN=jeldora' \
+		-keyout /etc/ssl/localhost.key \
+		-out /etc/ssl/localhost.crt
 
-EXPOSE 80 443 22
+COPY 	./srcs/nginx.conf /etc/nginx/conf.d/default.conf
+COPY	./srcs/index.html /www
+COPY 	./srcs/supervisord.conf /etc/supervisord.conf
 
-#CMD ["sh", "./start.sh"]
+COPY 	./srcs/start.sh start.sh
 
-EXPOSE 80 443 22
-ENTRYPOINT [ "sh", "/tmp/start.sh" ]
+RUN 	chmod 711 start.sh
+
+EXPOSE	80 443 22
+
+CMD		["sh", "start.sh"]
