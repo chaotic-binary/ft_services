@@ -33,7 +33,4 @@ RUN chmod u+x /tmp/start.sh
 
 EXPOSE 80 443 22
 
-#CMD ["sh", "./start.sh"]
-
-EXPOSE 80 443 22
 CMD [ "sh", "/tmp/start.sh" ]

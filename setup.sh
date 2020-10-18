@@ -32,10 +32,9 @@ kubectl apply -f ./srcs/metallb.yaml ;
 #kubectl apply -f ./srcs/mysql/mysql.yaml ;
 #docker build -t phpmyadmin-img ./srcs/phpmyadmin/ ;
 #kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml ;
-#docker build -t nginx-img ./srcs/nginx/ ;
-#kubectl apply -f ./srcs/nginx/nginx.yaml ;
-
-docker build -t nginx ./srcs/nginx/ ;
+docker build -t nginx-img ./srcs/nginx/ ;
 kubectl apply -f ./srcs/nginx/nginx.yaml ;
+#docker build -t ftps-img ./srcs/ftps/ ;
+#kubectl apply -f ./srcs/ftps/ftps.yaml ;
 
 minikube dashboard

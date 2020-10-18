@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: nginx
   name: nginx
@@ -10,7 +9,8 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  strategy: {}
+  strategy:
+    type: Recreate
   template:
     metadata:
       creationTimestamp: null
@@ -18,13 +18,13 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: nginx
-        name: nginx
+      - image: nginx-img
+        name: nginx-container
         imagePullPolicy: Never
         ports:
-        - containerPort: 22
-        - containerPort: 80
-        - containerPort: 443
+          - containerPort: 80
+          - containerPort: 443
+          - containerPort: 22
         resources: {}
 status: {}
 ---
@@ -34,7 +34,7 @@ status: {}
       creationTimestamp: null
       labels:
         app: nginx
-      name: nginx
+      name: nginx-service
     spec:
       ports:
       - port: 80
@@ -52,5 +52,6 @@ status: {}
       selector:
         app: nginx
       type: LoadBalancer
+      loadBalancerIP: 192.168.99.241
     status:
       loadBalancer: {}
