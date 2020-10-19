@@ -2,19 +2,26 @@ FROM alpine:latest
 
 RUN apk update && \
 	apk upgrade && \
-	apk add openssl \
-	vsftpd
+	apk add openssl openrc vsftpd
 
-RUN mkdir -p /etc/vsftpd/private \
-	&& openssl req -newkey rsa:2048 -nodes -keyout /etc/vsftpd/private/vsftpd.pem \
-		-x509 -days 90 -subj "/C=RU/ST=Moscow/L=Moscow/O=42/OU=21/CN=ttamesha" \
-		-out /etc/vsftpd/private/vsftpd.pem \
-	&& chmod 755 /etc/vsftpd/private/vsftpd.pem
+RUN 	mkdir -p /var/ftp /ftp_user ;
 
-RUN echo 'root:root' | chpasswd
+RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+		-subj "/C=RU/ST=Moscow/L=Moscow/O=42/OU=21/CN=ttamesha" \
+		-keyout /etc/vsftpd/vsftpd.pem \
+		-out /etc/vsftpd/vsftpd.pem
 
-COPY vsftpd.conf		/etc/vsftpd/vsftp_ftps.conf
-COPY start.sh			/tmp/
+# Create user
+RUN mkdir -p /ftp_user && \
+	adduser --home=/ftp_user -D ftp_user && \
+	echo "ftp_user:password" | chpasswd
 
-EXPOSE 21
-CMD ["sh", "/tmp/start.sh"]
+COPY	vsftpd.conf		/etc/vsftpd/vsftp.conf
+COPY	start.sh		/tmp/
+
+RUN echo "ftp_user" >> /etc/vsftpd/vsftpd.userlist
+
+RUN		chmod u+x		/tmp/start.sh
+
+EXPOSE	20 21 21000-22000
+CMD		["sh", "/tmp/start.sh"]

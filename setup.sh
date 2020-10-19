@@ -9,6 +9,12 @@ PURPLE='\033[35m'
 CYAN='\033[36m'
 DEFAULT='\033[0m'
 
+function create_svc()
+{
+	docker build -t $1-img ./$1/
+	kubectl create -f $1/$1.yaml
+}
+
 minikube delete;
 
 minikube start --driver=virtualbox --disk-size=4000MB;
@@ -25,7 +31,14 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manife
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)" ;
 kubectl apply -f ./srcs/metallb.yaml ;
 
-#Build images and apply deployments,#--build-arg MINIKUBE_IP=${MINIKUBE_IP}
+#Build images and apply deployments
+#cd srcs
+#for service in $services
+#do
+#	echo $service 'starting'
+#	create_svc $service
+#done
+
 #docker build -t wordpress-img ./srcs/wordpress/ ;
 #kubectl apply -f ./srcs/wordpress/wordpress.yaml ;
 #docker build -t mysql-img ./srcs/mysql/ ;
@@ -34,7 +47,13 @@ kubectl apply -f ./srcs/metallb.yaml ;
 #kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml ;
 docker build -t nginx-img ./srcs/nginx/ ;
 kubectl apply -f ./srcs/nginx/nginx.yaml ;
-#docker build -t ftps-img ./srcs/ftps/ ;
-#kubectl apply -f ./srcs/ftps/ftps.yaml ;
+docker build -t ftps-img ./srcs/ftps/ ;
+kubectl apply -f ./srcs/ftps/ftps.yaml ;
+#docker build -t influxdb-img ./srcs/influxdb/ ;
+#kubectl apply -f ./srcs/influxdb/influxdb.yaml ;
+#docker build -t grafana-img ./srcs/grafana/ ;
+#kubectl apply -f ./srcs/grafana/grafana.yaml ;
+#docker build -t telegraf-img ./srcs/telegraf/ ;
+#kubectl apply -f ./srcs/telegraf/telegraf.yaml ;
 
 minikube dashboard
