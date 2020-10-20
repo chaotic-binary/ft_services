@@ -6,8 +6,8 @@ type: Opaque
 stringData:
   INFLUXDB_DB: telegraf
   INFLUXDB_URL: http://influxdb-service:8086
-  INFLUXDB_USER: telegraf
-  INFLUXDB_USER_PASSWORD: metricsmetricsmetricsmetrics
+  INFLUXDB_USER: admin
+  INFLUXDB_PASSWORD: admin
 ---
 apiVersion: v1
 kind: ConfigMap

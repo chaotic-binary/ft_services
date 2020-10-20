@@ -328,10 +328,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
+  labels:
+    app: grafana
 spec:
   selector:
     matchLabels:
       app: grafana
+  replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       name: grafana-pod
@@ -339,12 +344,21 @@ spec:
         app: grafana
     spec:
       containers:
-      - name: grafana-container
-        image: grafana-img
-        ports:
-        - containerPort: 3000
-          name: https
-        imagePullPolicy: Never
+        - name: grafana-container
+          image: grafana-img
+          imagePullPolicy: Never
+          volumeMounts:
+            - name: grafana-conf
+              subPath: grafana.ini
+              mountPath: /etc/grafana/grafana.ini
+              readOnly: true
+          envFrom:
+            - secretRef:
+                name: grafana-secret
+      volumes:
+        - name: grafana-conf
+          configMap:
+            name: grafana-conf
 ---
 apiVersion: v1
 kind: Service
@@ -354,7 +368,9 @@ spec:
   selector:
     app: grafana
   ports:
-  - port: 3000
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
   type: LoadBalancer
   loadBalancerIP: 192.168.99.249
 ---
