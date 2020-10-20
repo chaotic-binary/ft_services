@@ -13,9 +13,7 @@ spec:
     - port: 5000
       name: port
       targetPort: 5000
-
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,7 +29,7 @@ spec:
     type: Recreate
   template:
     metadata:
-      name: phpmyadmin
+      name: phpmyadmin-pod
       labels:
         app: phpmyadmin
     spec:

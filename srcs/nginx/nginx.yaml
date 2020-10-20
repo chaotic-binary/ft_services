@@ -13,7 +13,7 @@ spec:
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
+      name: nginx-pod
       labels:
         app: nginx
     spec:
@@ -31,7 +31,6 @@ status: {}
     apiVersion: v1
     kind: Service
     metadata:
-      creationTimestamp: null
       labels:
         app: nginx
       name: nginx-service

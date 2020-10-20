@@ -30,6 +30,7 @@ spec:
     type: Recreate
   template:
     metadata:
+      name: ftps-pod
       labels:
         app: ftps
     spec:

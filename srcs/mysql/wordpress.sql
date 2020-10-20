@@ -6,6 +6,7 @@
 -- Generation Time: Oct 13, 2020 at 03:40 PM
 -- Server version: 10.4.15-MariaDB-log
 -- PHP Version: 7.3.23
+USE wordpress;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;

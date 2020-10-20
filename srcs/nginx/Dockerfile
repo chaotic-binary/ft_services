@@ -27,12 +27,12 @@ COPY	./nginx.conf /etc/nginx/conf.d/default.conf
 COPY	./index.html /www
 COPY	./supervisord.conf /etc/supervisord.conf
 
-COPY	./start.sh /tmp/start.sh
+#COPY	./start.sh /tmp/start.sh
+#RUN	chmod u+x /tmp/start.sh
 
-RUN		chmod u+x /tmp/start.sh
 RUN		chmod 744 /run/nginx
 RUN		chmod 744 /run/sshd
 
 EXPOSE	80 443 22
 
-CMD		["sh", "/tmp/start.sh"]
+ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

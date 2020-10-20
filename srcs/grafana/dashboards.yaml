@@ -1,5 +1,11 @@
 
 apiVersion: 1
+
 providers:
-  options:
-    path:  /grafana/public/dashboards/
+ - name: 'default'
+   orgId: 1
+   folder: ''
+   folderUid: ''
+   type: file
+   options:
+     path: /grafana/conf/provisioning/dashboards/json
