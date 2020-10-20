@@ -7,10 +7,10 @@ RUN		wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/
 		wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk && \
 		apk add glibc-2.28-r0.apk
 
-RUN		mkdir						/grafana/conf/provisioning/dashboards/json
+RUN		mkdir -p					/grafana/conf/provisioning/dashboards/json
 
 COPY	influxdb-datasource.yaml	/usr/share/grafana/conf/provisioning/datasources/influxdb.yaml
-COPY	dashboards.yaml				/usr/share/grafana/conf/provisioning/dashboards/dashboards.yaml
+COPY	dashboards.yaml				/usr/share/grafana/conf/provisioning/dashboards/default.yaml
 COPY	./json						/grafana/conf/provisioning/dashboards/json
 
 EXPOSE	3000

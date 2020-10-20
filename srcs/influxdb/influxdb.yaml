@@ -97,8 +97,3 @@ metadata:
 type: Opaque
 stringData:
   INFLUXDB_CONFIG_PATH: /etc/influxdb/influxdb.conf
-  INFLUXDB_ADMIN_USER: admin
-  INFLUXDB_ADMIN_PASSWORD: admin
-  INFLUXDB_DB: telegraf
-  INFLUXDB_USER: user
-  INFLUXDB_USER_PASSWORD: user
