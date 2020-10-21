@@ -15,61 +15,67 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 3,
   "links": [],
   "panels": [
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
+      "cards": {
+        "cardPadding": null,
+        "cardRound": null
+      },
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateOranges",
+        "exponent": 0.5,
+        "mode": "spectrum"
+      },
+      "dataFormat": "timeseries",
       "datasource": "influxdb",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
         "y": 0
       },
-      "hiddenSeries": false,
+      "heatmap": {},
+      "hideZeroBuckets": false,
+      "highlightCards": true,
       "id": 2,
       "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
+        "show": false
       },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
       "pluginVersion": "7.2.1",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "reverseYBuckets": false,
       "targets": [
         {
           "groupBy": [
             {
               "params": [
-                "$__interval"
+                "1s"
               ],
               "type": "time"
             },
@@ -83,21 +89,19 @@
           "measurement": "docker_container_cpu",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "usage_in_kernelmode"
+                  "usage_system"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "integral"
+                "type": "mean"
               }
             ]
           ],
@@ -105,51 +109,36 @@
             {
               "key": "app",
               "operator": "=",
-              "value": "grafana"
+              "value": "ftps"
             }
           ]
         }
       ],
-      "thresholds": [],
       "timeFrom": null,
-      "timeRegions": [],
       "timeShift": null,
       "title": "Panel Title",
       "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
         "show": true,
-        "values": []
+        "showHistogram": false
       },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "xBucketNumber": null,
+      "xBucketSize": null,
+      "yAxis": {
+        "decimals": null,
+        "format": "short",
+        "logBase": 1,
+        "max": null,
+        "min": null,
+        "show": true,
+        "splitFactor": null
+      },
+      "yBucketBound": "auto",
+      "yBucketNumber": null,
+      "yBucketSize": null
     }
   ],
   "schemaVersion": 26,
@@ -164,7 +153,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "grafana",
-  "uid": "Wnh8HHtGz",
+  "title": "ftps",
+  "uid": "RQapcHtGz",
   "version": 1
 }
